@@ -41,10 +41,11 @@ export namespace CustomMarkedown
             
                 render: function (tokens: Token[], index: number) 
                 {
-                    var m = tokens[index].info.match(/^note\s+(.*)$/);          
-                    // return `<div class="note warn">dwadaw</div>`;
+                    if (tokens[index].info.length == 0) return '</div>';
 
-                    if (tokens[index].nesting === 1) return `<div class="note warn">`
+                    var m = tokens[index].info.match(/^note\s+(?<CLASS>.+?)$/);          
+                    if (m?.groups == null) return ``;
+                    if (tokens[index].nesting === 1) return `<div class="note ${m?.groups["CLASS"]}">`
                     else return '</div>';
                 }
             });
